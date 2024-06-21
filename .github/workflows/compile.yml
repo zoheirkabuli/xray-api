@@ -7,44 +7,40 @@ on:
         required: true
         type: boolean
         description: 'python compiling'
-        
       compile_cpp:
-        required: true
+        required: false
         type: boolean
         description: 'cpp compiling'
       compile_csharp:
-        required: true
+        required: false
         type: boolean
         description: 'c# compiling'
       compile_ruby:
-        required: true
+        required: false
         type: boolean
         description: 'ruby compiling'
       compile_nodejs:
-        required: true
+        required: false
         type: boolean
         description: 'nodejs compiling'
-        
       commit_python:
         required: true
         type: boolean
         description: 'python committing'
-        
       commit_cpp:
-        required: true
+        required: false
         type: boolean
         description: 'cpp committing'
-        
       commit_csharp:
-        required: true
+        required: false
         type: boolean
         description: 'c# committing'
       commit_ruby:
-        required: true
+        required: false
         type: boolean
         description: 'ruby committing'
       commit_nodejs:
-        required: true
+        required: false
         type: boolean
         description: 'nodejs committing'
 
@@ -135,7 +131,6 @@ jobs:
           git add .
           git commit -m "compile: proto files compiled"
           git push
-
 
   Csharp:
     if: ${{ github.event.inputs.compile_csharp == 'true' }}
