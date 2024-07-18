@@ -99,6 +99,7 @@ jobs:
 
       - name: Tree
         run: |
+          rm -rf node_modules
           tree
 
       - name: Commit and Push Changes
