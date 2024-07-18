@@ -34,8 +34,8 @@ elif compiler == "nodejs":
     command = (
         f"protoc "
         f"--proto_path={XRAY_API_PATH} "
-        f"--js_out={RUBY_OUTPUT_PATH} "
-        f"--grpc_out={RUBY_OUTPUT_PATH} "
+        f"--js_out={NODEJS_OUTPUT_PATH} "
+        f"--grpc_out={NODEJS_OUTPUT_PATH} "
         "--plugin=protoc-gen-grpc=$(which grpc_node_plugin) "
         f"{' '.join(proto_files)}"
     )
