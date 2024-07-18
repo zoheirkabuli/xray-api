@@ -32,11 +32,11 @@ if compiler == "python":
     )
 elif compiler == "nodejs":
     command = (
-        f"protoc "
+        f"./node_modules/.bin/grpc_tools_node_protoc "
         f"--proto_path={XRAY_API_PATH} "
-        f"--js_out={NODEJS_OUTPUT_PATH} "
+        f" --js_out=import_style=commonjs,binary:{NODEJS_OUTPUT_PATH} "
         f"--grpc_out={NODEJS_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_node_plugin) "
+        "--plugin=protoc-gen-grpc=./node_modules/.bin/grpc_tools_node_protoc_plugin "
         f"{' '.join(proto_files)}"
     )
 else:
