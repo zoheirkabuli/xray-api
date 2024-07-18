@@ -7,18 +7,6 @@ on:
         required: true
         type: boolean
         description: 'python compiling'
-      compile_cpp:
-        required: false
-        type: boolean
-        description: 'cpp compiling'
-      compile_csharp:
-        required: false
-        type: boolean
-        description: 'c# compiling'
-      compile_ruby:
-        required: false
-        type: boolean
-        description: 'ruby compiling'
       compile_nodejs:
         required: false
         type: boolean
@@ -27,18 +15,6 @@ on:
         required: true
         type: boolean
         description: 'python committing'
-      commit_cpp:
-        required: false
-        type: boolean
-        description: 'cpp committing'
-      commit_csharp:
-        required: false
-        type: boolean
-        description: 'c# committing'
-      commit_ruby:
-        required: false
-        type: boolean
-        description: 'ruby committing'
       commit_nodejs:
         required: false
         type: boolean
@@ -86,139 +62,6 @@ jobs:
           git add .
           git commit -m "compile: proto files compiled"
           git push
-
-  Cpp:
-    if: ${{ github.event.inputs.compile_cpp == 'true' }}
-    name: Compile proto files to c++ source
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-
-      - name:  Install Pre-requisites
-        run: |
-          cd $HOME
-          mkdir grpc
-          cd grpc
-          wget https://github.com/XVGuardian/grpc-compiled/releases/download/v1.61.0/local_directory.zip
-          unzip local_directory.zip
-          tree .local
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-
-      - name: Compile
-        run: |
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-          python compile.py cpp
-          
-
-      - name: Tree
-        run: |
-          tree
-
-      - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_cpp == 'true' }}
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git pull
-          git add .
-          git commit -m "compile: proto files compiled"
-          git push
-
-  Csharp:
-    if: ${{ github.event.inputs.compile_csharp == 'true' }}
-    name: Compile proto files to csharp source
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      - name:  Install Pre-requisites
-        run: |
-          cd $HOME
-          mkdir grpc
-          cd grpc
-          wget https://github.com/XVGuardian/grpc-compiled/releases/download/v1.61.0/local_directory.zip
-          unzip local_directory.zip
-          tree .local
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-
-      - name: Compile
-        run: |
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-          python compile.py csharp
-
-      - name: Tree
-        run: |
-          tree
-
-      - name: Commit and Push Changes
-        if:  ${{ github.event.inputs.commit_csharp == 'true' }}
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git add .
-          git commit -m "compile: proto files compiled"
-          git push
-
-  Ruby:
-    if: ${{ github.event.inputs.compile_ruby == 'true' }}
-    name: Compile proto files to ruby source
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-
-
-      - name:  Install Pre-requisites
-        run: |
-          cd $HOME
-          mkdir grpc
-          cd grpc
-          wget https://github.com/XVGuardian/grpc-compiled/releases/download/v1.61.0/local_directory.zip
-          unzip local_directory.zip
-          tree .local
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-
-      - name: Compile
-        run: |
-          export PATH="$HOME/grpc/.local/bin:$PATH"
-          python compile.py ruby
-          
-
-      - name: Tree
-        run: |
-          tree
-
-      - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_ruby == 'true' }}
-        run: |
-          git config --local user.email "actions@github.com"
-          git config --local user.name "GitHub Actions"
-          git pull
-          git add .
-          git commit -m "compile: proto files compiled"
-          git push  
 
   Nodejs:
     if: ${{ github.event.inputs.compile_nodejs == 'true' }}

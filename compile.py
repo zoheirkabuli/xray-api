@@ -7,9 +7,6 @@ XRAY_API_PATH = os.path.join(CURRENT_DIRECTORY, 'xray_api')
 DIST_PATH = os.path.join(CURRENT_DIRECTORY, 'dist')
 
 PYTHON_OUTPUT_PATH = os.path.join(DIST_PATH, "python")
-CPP_OUTPUT_PATH = os.path.join(DIST_PATH, "cpp")
-CSHARP_OUTPUT_PATH = os.path.join(DIST_PATH, "csharp")
-RUBY_OUTPUT_PATH = os.path.join(DIST_PATH, "ruby")
 NODEJS_OUTPUT_PATH = os.path.join(DIST_PATH, "nodejs")
 
 
@@ -31,33 +28,6 @@ if compiler == "python":
         f"--proto_path={XRAY_API_PATH} "
         f"--python_out={PYTHON_OUTPUT_PATH} "
         f"--grpc_python_out={PYTHON_OUTPUT_PATH} "
-        f"{' '.join(proto_files)}"
-    )
-elif compiler == "cpp":
-    command = (
-        f"protoc "
-        f"--proto_path={XRAY_API_PATH} "
-        f"--cpp_out={CPP_OUTPUT_PATH} "
-        f"--grpc_out={CPP_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_cpp_plugin) "
-        f"{' '.join(proto_files)}"
-    )
-elif compiler == "csharp":
-    command = (
-        f"protoc "
-        f"--proto_path={XRAY_API_PATH} "
-        f"--csharp_out={CSHARP_OUTPUT_PATH} "
-        f"--grpc_out={CSHARP_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_csharp_plugin) "
-        f"{' '.join(proto_files)}"
-    )
-elif compiler == "ruby":
-    command = (
-        f"protoc "
-        f"--proto_path={XRAY_API_PATH} "
-        f"--ruby_out={RUBY_OUTPUT_PATH} "
-        f"--grpc_out={RUBY_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_ruby_plugin) "
         f"{' '.join(proto_files)}"
     )
 elif compiler == "nodejs":
