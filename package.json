@@ -1,0 +1,7 @@
+{
+  "devDependencies": {
+    "@grpc/grpc-js": "^1.11.1",
+    "grpc-tools": "^1.12.4",
+    "protobufjs": "^7.3.2"
+  }
+}
