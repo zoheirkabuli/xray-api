@@ -1,0 +1,30 @@
+# Generated TypeScript files from protobuf compilation
+*.ts
+*.d.ts
+*.js
+*.js.map
+
+# Generated gRPC files
+*_grpc_pb.*
+*_pb.*
+
+# Node modules (if any)
+node_modules/
+
+# Build outputs
+build/
+dist/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Keep this directory but ignore contents
+*
+!.gitignore
