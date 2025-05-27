@@ -3,64 +3,69 @@ name: Compile proto files
 on:
   workflow_dispatch:
     inputs:
-      compile_python:
+      python:
         required: true
-        type: boolean
-        description: "python compiling"
+        type: choice
+        description: "Python: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
-      compile_cpp:
+      cpp:
         required: true
-        type: boolean
-        description: "cpp compiling"
-      compile_csharp:
-        required: true
-        type: boolean
-        description: "c# compiling"
-      compile_ruby:
-        required: true
-        type: boolean
-        description: "ruby compiling"
-      compile_nodejs:
-        required: true
-        type: boolean
-        description: "nodejs compiling"
+        type: choice
+        description: "C++: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
-      compile_typescript:
+      csharp:
         required: true
-        type: boolean
-        description: "typescript compiling"
+        type: choice
+        description: "C#: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
-      commit_python:
+      ruby:
         required: true
-        type: boolean
-        description: "python committing"
+        type: choice
+        description: "Ruby: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
-      commit_cpp:
+      nodejs:
         required: true
-        type: boolean
-        description: "cpp committing"
+        type: choice
+        description: "Node.js: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
-      commit_csharp:
+      typescript:
         required: true
-        type: boolean
-        description: "c# committing"
-      commit_ruby:
-        required: true
-        type: boolean
-        description: "ruby committing"
-      commit_nodejs:
-        required: true
-        type: boolean
-        description: "nodejs committing"
-
-      commit_typescript:
-        required: true
-        type: boolean
-        description: "typescript committing"
+        type: choice
+        description: "TypeScript: compile and/or commit"
+        options:
+          - "none"
+          - "compile"
+          - "commit"
+          - "compile+commit"
 
 jobs:
   Python:
-    if: ${{ github.event.inputs.compile_python == 'true' }}
+    if: ${{ contains(github.event.inputs.python, 'compile') }}
     name: Compile proto files to python source
     runs-on: ubuntu-latest
 
@@ -92,7 +97,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_python == 'true' }}
+        if: ${{ contains(github.event.inputs.python, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -101,7 +106,7 @@ jobs:
           git push
 
   Cpp:
-    if: ${{ github.event.inputs.compile_cpp == 'true' }}
+    if: ${{ contains(github.event.inputs.cpp, 'compile') }}
     name: Compile proto files to c++ source
     runs-on: ubuntu-latest
 
@@ -134,7 +139,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_cpp == 'true' }}
+        if: ${{ contains(github.event.inputs.cpp, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -144,7 +149,7 @@ jobs:
           git push
 
   Csharp:
-    if: ${{ github.event.inputs.compile_csharp == 'true' }}
+    if: ${{ contains(github.event.inputs.csharp, 'compile') }}
     name: Compile proto files to csharp source
     runs-on: ubuntu-latest
 
@@ -177,7 +182,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_csharp == 'true' }}
+        if: ${{ contains(github.event.inputs.csharp, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -186,7 +191,7 @@ jobs:
           git push
 
   Ruby:
-    if: ${{ github.event.inputs.compile_ruby == 'true' }}
+    if: ${{ contains(github.event.inputs.ruby, 'compile') }}
     name: Compile proto files to ruby source
     runs-on: ubuntu-latest
 
@@ -219,7 +224,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_ruby == 'true' }}
+        if: ${{ contains(github.event.inputs.ruby, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -229,7 +234,7 @@ jobs:
           git push
 
   Nodejs:
-    if: ${{ github.event.inputs.compile_nodejs == 'true' }}
+    if: ${{ contains(github.event.inputs.nodejs, 'compile') }}
     name: Compile proto files to nodejs source
     runs-on: ubuntu-latest
 
@@ -278,7 +283,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_nodejs == 'true' }}
+        if: ${{ contains(github.event.inputs.nodejs, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -287,7 +292,7 @@ jobs:
           git push
 
   TypeScript:
-    if: ${{ github.event.inputs.compile_typescript == 'true' }}
+    if: ${{ contains(github.event.inputs.typescript, 'compile') }}
     name: Compile proto files to typescript source
     runs-on: ubuntu-latest
 
@@ -324,7 +329,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if: ${{ github.event.inputs.commit_typescript == 'true' }}
+        if: ${{ contains(github.event.inputs.typescript, 'commit') }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
