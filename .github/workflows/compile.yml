@@ -276,8 +276,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install grpc-tools grpc
-          npm install -g protoc-gen-ts
+          npm install -g protoc-gen-js
 
       - name: Install Pre-requisites
         run: |
