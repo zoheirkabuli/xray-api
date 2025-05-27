@@ -85,7 +85,7 @@ elif compiler == "nodejs":
     command = (
         f"protoc "
         f"--proto_path={XRAY_API_PATH} "
-        f"--js_out={NODEJS_OUTPUT_PATH} "
+        f"--js_out=import_style=commonjs,binary:{NODEJS_OUTPUT_PATH} "
         "--plugin=protoc-gen-js=$(which protoc-gen-js) "
         f"{' '.join(proto_files)}"
     )
