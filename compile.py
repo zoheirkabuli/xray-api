@@ -87,9 +87,7 @@ elif compiler == "nodejs":
         f"--proto_path={XRAY_API_PATH} "
         f"--js_out=import_style=commonjs,binary:{NODEJS_OUTPUT_PATH} "
         f"--grpc_out=grpc_js:{NODEJS_OUTPUT_PATH} "
-        f"--ts_out=grpc_js:{NODEJS_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_tools_node_protoc_plugin) "
-        "--plugin=protoc-gen-ts=$(which protoc-gen-ts) "
+        "--plugin=protoc-gen-js=$(which protoc-gen-js) "
         f"{' '.join(proto_files)}"
     )
 elif compiler == "typescript":
