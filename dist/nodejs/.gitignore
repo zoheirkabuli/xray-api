@@ -1,11 +1,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/node
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
-# Generated protobuf files
-*_pb.js
-*_pb.d.ts
-*_grpc_pb.js
-*_grpc_pb.d.ts
+# Note: Generated protobuf files are committed as they are the deliverable output
 
 ### Node ###
 # Logs

@@ -1,19 +1,8 @@
-# Generated TypeScript files from protobuf compilation
-*.ts
-*.d.ts
-*.js
-*.js.map
-
-# Generated gRPC files
-*_grpc_pb.*
-*_pb.*
-
 # Node modules (if any)
 node_modules/
 
-# Build outputs
+# Build outputs (but not the generated TypeScript files)
 build/
-dist/
 
 # IDE files
 .vscode/
@@ -25,6 +14,9 @@ dist/
 .DS_Store
 Thumbs.db
 
-# Keep this directory but ignore contents
-*
-!.gitignore
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
