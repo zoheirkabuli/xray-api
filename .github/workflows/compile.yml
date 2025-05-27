@@ -6,47 +6,57 @@ on:
       compile_python:
         required: true
         type: boolean
-        description: 'python compiling'
-        
+        description: "python compiling"
+
       compile_cpp:
         required: true
         type: boolean
-        description: 'cpp compiling'
+        description: "cpp compiling"
       compile_csharp:
         required: true
         type: boolean
-        description: 'c# compiling'
+        description: "c# compiling"
       compile_ruby:
         required: true
         type: boolean
-        description: 'ruby compiling'
+        description: "ruby compiling"
       compile_nodejs:
         required: true
         type: boolean
-        description: 'nodejs compiling'
-        
+        description: "nodejs compiling"
+
+      compile_typescript:
+        required: true
+        type: boolean
+        description: "typescript compiling"
+
       commit_python:
         required: true
         type: boolean
-        description: 'python committing'
-        
+        description: "python committing"
+
       commit_cpp:
         required: true
         type: boolean
-        description: 'cpp committing'
-        
+        description: "cpp committing"
+
       commit_csharp:
         required: true
         type: boolean
-        description: 'c# committing'
+        description: "c# committing"
       commit_ruby:
         required: true
         type: boolean
-        description: 'ruby committing'
+        description: "ruby committing"
       commit_nodejs:
         required: true
         type: boolean
-        description: 'nodejs committing'
+        description: "nodejs committing"
+
+      commit_typescript:
+        required: true
+        type: boolean
+        description: "typescript committing"
 
 jobs:
   Python:
@@ -61,7 +71,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Setup protoc
         uses: arduino/setup-protoc@v3
@@ -73,7 +83,6 @@ jobs:
         run: |
           pip install grpcio grpcio-tools
 
-
       - name: Compile
         run: |
           python compile.py python
@@ -83,7 +92,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if:  ${{ github.event.inputs.commit_python == 'true' }}
+        if: ${{ github.event.inputs.commit_python == 'true' }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -103,10 +112,9 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-
-      - name:  Install Pre-requisites
+      - name: Install Pre-requisites
         run: |
           cd $HOME
           mkdir grpc
@@ -120,7 +128,6 @@ jobs:
         run: |
           export PATH="$HOME/grpc/.local/bin:$PATH"
           python compile.py cpp
-          
 
       - name: Tree
         run: |
@@ -136,7 +143,6 @@ jobs:
           git commit -m "compile: proto files compiled"
           git push
 
-
   Csharp:
     if: ${{ github.event.inputs.compile_csharp == 'true' }}
     name: Compile proto files to csharp source
@@ -149,9 +155,9 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-      - name:  Install Pre-requisites
+      - name: Install Pre-requisites
         run: |
           cd $HOME
           mkdir grpc
@@ -171,7 +177,7 @@ jobs:
           tree
 
       - name: Commit and Push Changes
-        if:  ${{ github.event.inputs.commit_csharp == 'true' }}
+        if: ${{ github.event.inputs.commit_csharp == 'true' }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"
@@ -191,11 +197,9 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
-
-
-      - name:  Install Pre-requisites
+      - name: Install Pre-requisites
         run: |
           cd $HOME
           mkdir grpc
@@ -209,7 +213,6 @@ jobs:
         run: |
           export PATH="$HOME/grpc/.local/bin:$PATH"
           python compile.py ruby
-          
 
       - name: Tree
         run: |
@@ -223,7 +226,7 @@ jobs:
           git pull
           git add .
           git commit -m "compile: proto files compiled"
-          git push  
+          git push
 
   Nodejs:
     if: ${{ github.event.inputs.compile_nodejs == 'true' }}
@@ -237,7 +240,7 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: "3.10"
 
       - name: Setup protoc
         uses: arduino/setup-protoc@v3
@@ -248,14 +251,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: "latest"
 
       - name: Install dependencies
         run: |
           npm install grpc-tools grpc
+          npm install -g protoc-gen-ts
 
-
-      - name:  Install Pre-requisites
+      - name: Install Pre-requisites
         run: |
           cd $HOME
           mkdir grpc
@@ -269,7 +272,6 @@ jobs:
         run: |
           export PATH="$HOME/grpc/.local/bin:$PATH"
           python compile.py nodejs
-          
 
       - name: Tree
         run: |
@@ -277,6 +279,52 @@ jobs:
 
       - name: Commit and Push Changes
         if: ${{ github.event.inputs.commit_nodejs == 'true' }}
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "GitHub Actions"
+          git add .
+          git commit -m "compile: proto files compiled"
+          git push
+
+  TypeScript:
+    if: ${{ github.event.inputs.compile_typescript == 'true' }}
+    name: Compile proto files to typescript source
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Setup protoc
+        uses: arduino/setup-protoc@v3
+        with:
+          version: "25.3"
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "latest"
+
+      - name: Install dependencies
+        run: |
+          npm install -g protoc-gen-ts
+
+      - name: Compile
+        run: |
+          python compile.py typescript
+
+      - name: Tree
+        run: |
+          tree
+
+      - name: Commit and Push Changes
+        if: ${{ github.event.inputs.commit_typescript == 'true' }}
         run: |
           git config --local user.email "actions@github.com"
           git config --local user.name "GitHub Actions"

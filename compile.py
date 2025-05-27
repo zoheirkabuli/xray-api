@@ -11,6 +11,7 @@ CPP_OUTPUT_PATH = os.path.join(DIST_PATH, "cpp")
 CSHARP_OUTPUT_PATH = os.path.join(DIST_PATH, "csharp")
 RUBY_OUTPUT_PATH = os.path.join(DIST_PATH, "ruby")
 NODEJS_OUTPUT_PATH = os.path.join(DIST_PATH, "nodejs")
+TYPESCRIPT_OUTPUT_PATH = os.path.join(DIST_PATH, "typescript")
 
 
 def find_proto_files():
@@ -64,9 +65,19 @@ elif compiler == "nodejs":
     command = (
         f"protoc "
         f"--proto_path={XRAY_API_PATH} "
-        f"--js_out={RUBY_OUTPUT_PATH} "
-        f"--grpc_out={RUBY_OUTPUT_PATH} "
-        "--plugin=protoc-gen-grpc=$(which grpc_node_plugin) "
+        f"--js_out=import_style=commonjs,binary:{NODEJS_OUTPUT_PATH} "
+        f"--grpc_out=grpc_js:{NODEJS_OUTPUT_PATH} "
+        f"--ts_out=grpc_js:{NODEJS_OUTPUT_PATH} "
+        "--plugin=protoc-gen-grpc=$(which grpc_tools_node_protoc_plugin) "
+        "--plugin=protoc-gen-ts=$(which protoc-gen-ts) "
+        f"{' '.join(proto_files)}"
+    )
+elif compiler == "typescript":
+    command = (
+        f"protoc "
+        f"--proto_path={XRAY_API_PATH} "
+        f"--ts_out=grpc_js:{TYPESCRIPT_OUTPUT_PATH} "
+        "--plugin=protoc-gen-ts=$(which protoc-gen-ts) "
         f"{' '.join(proto_files)}"
     )
 else:
