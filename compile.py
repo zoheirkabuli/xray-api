@@ -95,9 +95,8 @@ elif compiler == "typescript":
     command = (
         f"protoc "
         f"--proto_path={XRAY_API_PATH} "
-        f"--ts_out={TYPESCRIPT_OUTPUT_PATH} "
-        f"--grpc_out={TYPESCRIPT_OUTPUT_PATH} "
-        "--plugin=protoc-gen-ts=$(which protoc-gen-ts) "
+        f"--ts_proto_out={TYPESCRIPT_OUTPUT_PATH} "
+        "--plugin=./node_modules/.bin/protoc-gen-ts_proto "
         f"{' '.join(proto_files)}"
     )
 else:
